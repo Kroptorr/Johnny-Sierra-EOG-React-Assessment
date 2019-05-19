@@ -13,9 +13,6 @@ const fetchDroneData = (state) => {
 const droneDataReceived = (state, action) => {
 	return {...state, data: action.data, fetching: false};
 };
-const droneDataError=(state, action)  => {
-	return {...state, fetching: false, data:[], error: action.error}
-};
 
 const handlers = {
 	[actions.DRONE_DATA_RECEIVED]: droneDataReceived,

@@ -1,20 +1,24 @@
-import {all, call, put, takeEvery} from "redux-saga/effects";
+import {all, call, cancel, put, takeEvery} from "redux-saga/effects";
 import * as actions from "../actions";
 import api from "../api";
 
 // worker saga: makes the api call when watcher saga sees the action
 function* workerSaga () {
-	try {
- 	const {data} = yield call(
- 		
+	
+	const {error, data} = yield call(
  		api.getDroneData
 	);
-		yield put({type: actions.DRONE_DATA_RECEIVED, data: data})
-	} catch (error) {
-		
-		console.log({error});
-		yield put({type: "API_CALL_FAILURE", error});
+	if (error) {
+		yield put({type: actions.API_ERROR, code: error.code});
+		yield cancel();
+		return;
 	}
+	if (!data) {
+		yield put({type: actions.API_ERROR});
+		yield cancel();
+		return;
+	}
+	yield put({type: actions.DRONE_DATA_RECEIVED, data: data});
  
 }
 

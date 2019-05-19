@@ -1,5 +1,4 @@
 import Avatar from "@material-ui/core/Avatar/Avatar";
-import Button from "@material-ui/core/Button/Button";
 import Card from "@material-ui/core/Card/Card";
 import CardContent from "@material-ui/core/CardContent/CardContent";
 import CardHeader from "@material-ui/core/CardHeader/CardHeader";
@@ -11,7 +10,7 @@ import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import React, {Component, Fragment} from "react";
 import {GoogleMap, Marker, withGoogleMap, withScriptjs} from "react-google-maps";
 import {connect} from "react-redux";
-import {toast} from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 import * as actions from "../store/actions";
 
@@ -20,10 +19,10 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
 		defaultZoom={4}
 		defaultCenter={{lat: 29.7604, lng: -95.3698}}
 	>
-		
-		{props.isMarkerShown && props.data[props.data.length - 1] &&
-		<Marker position={{lat: props.data[props.data.length - 1].latitude, lng: props.data[props.data.length - 1].longitude}}/>
-		}
+		{props.data ?
+			props.isMarkerShown && props.data[props.data.length - 1] &&
+			<Marker position={{lat: props.data[props.data.length - 1].latitude, lng: props.data[props.data.length - 1].longitude}}/>
+			: null}
 	</GoogleMap>
 ));
 
@@ -48,7 +47,6 @@ class Drone extends Component {
 	}
 	
 	render () {
-		const notify = () => toast("Error! Oh oh, seems something went wrong!");
 		const {data, fetching, classes} = this.props;
 		return (
 			<Fragment>
@@ -76,10 +74,6 @@ class Drone extends Component {
 								</ListItem>)}
 						</List>
 					</CardContent>}
-				</Card>
-				<Card>
-					<CardHeader title="Last 3 drone locations"/>
-					<Button onClick={notify}>adfs</Button>
 				</Card>
 			</Fragment>
 		
