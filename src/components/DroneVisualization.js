@@ -59,7 +59,7 @@ class Drone extends Component {
 					data={data}
 				/>
 				<Card>
-					<CardHeader title="Last 3 drone locations"/>
+					<CardHeader title="Last 3 Drone Locations"/>
 					{fetching && <CircularProgress className={classes.progress} color="secondary"/>}
 					{!fetching && <CardContent>
 						<List>
