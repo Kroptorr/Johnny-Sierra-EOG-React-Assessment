@@ -1,7 +1,7 @@
 import Card from "@material-ui/core/Card";
 import {withStyles} from "@material-ui/core/styles";
 import React from "react";
-import DroneVisual from "./DroneVisualization";
+import DroneVisual from "./VisualizationsDisplay";
 
 const styles = {
 	card: {

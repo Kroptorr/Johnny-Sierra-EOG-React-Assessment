@@ -3,7 +3,11 @@ import * as actions from "../actions";
 const initialState = {
 	fetching: false,
 	data: [],
-	error: null
+	error: null,
+	lastLongitude: null,
+	lastLatitude: null,
+	allTemps: [],
+	allTimestamps: []
 };
 
 const fetchDroneData = (state) => {
@@ -11,7 +15,20 @@ const fetchDroneData = (state) => {
 };
 
 const droneDataReceived = (state, action) => {
-	return {...state, data: action.data, fetching: false};
+	const data = action.data;
+	const {longitude, latitude} = data[data.length - 1];
+	const lastThree = data.slice(data.length - 4, data.length - 1).reverse();
+	return {
+		...state,
+		data,
+		fetching: false,
+		lastLongitude: longitude,
+		lastLatitude: latitude,
+		allTemps: data.map(c => c.metric),
+		allTimestamps: data.map(c => new Date(c.timestamp)),
+		lastThree
+	};
+	
 };
 
 const handlers = {
